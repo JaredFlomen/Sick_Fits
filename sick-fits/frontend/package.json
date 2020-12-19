@@ -11,7 +11,7 @@
     "test-win": "SET NODE_ENV=test&& jest --watch",
     "heroku-postbuild": "next build"
   },
-  "author": "",
+  "author": "Jared Flomen",
   "license": "ISC",
   "dependencies": {
     "apollo-boost": "^0.1.16",
