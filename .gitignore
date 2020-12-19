@@ -6,5 +6,4 @@ haters/
 .build/
 layout.md
 variables.env
-
-finished-application/
+/finished-application
