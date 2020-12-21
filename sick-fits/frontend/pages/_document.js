@@ -1,3 +1,5 @@
+//Fixing styled components flicker on server render
+
 import Document, { Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 
