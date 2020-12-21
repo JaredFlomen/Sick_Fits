@@ -19,7 +19,7 @@ const StyledPage = styled.div`
 `;
 
 const Inner = styled.div`
-  max-width: 1000px;
+  max-width: ${props => props.theme.maxWidth};
   margin: 0 auto;
   padding: 2rem;
 `;
