@@ -50,7 +50,7 @@ class Signup extends Component {
                   type="email"
                   name="email"
                   placeholder="Email" 
-                  value={this.state.emai} 
+                  value={this.state.email} 
                   onChange={this.saveToState}
                 />
               </label>

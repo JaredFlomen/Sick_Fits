@@ -52,7 +52,6 @@ class CreateItem extends Component {
       body: data
     });
     const file = await res.json();
-    console.log(file);
     this.setState({
       image: file.secure_url,
       largeImage: file.eager[0].secure_url
@@ -61,7 +60,10 @@ class CreateItem extends Component {
 
   render() {
     return (
-      <Mutation mutation={CREATE_ITEM_MUTATION} variables={this.state}>
+      <Mutation 
+        mutation={CREATE_ITEM_MUTATION} 
+        variables={this.state}
+      >
         {(createItem, { loading, error }) => (
         <Form 
           onSubmit={async e => {
