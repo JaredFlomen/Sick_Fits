@@ -4,6 +4,7 @@ const { randomBytes } = require('crypto');
 const { promisify } = require('util');
 const { transport, makeANiceEmail } = require('../mail');
 const { hasPermission } = require('../utils');
+const { exists } = require('fs');
 
 const Mutations = {
   async createItem(parent, args, ctx, info) {
@@ -193,6 +194,38 @@ const Mutations = {
       },
       where: {
         id: args.userId,
+      },
+    }, info);
+  },
+  async addToCart(parent, args, ctx, info) {
+    //Check they are signed in
+    const userId = ctx.request.userId;
+    if (!userId) {
+      throw new Error("You must be signed in!")
+    }
+    //Query current cart
+    const [exisitingCartItem] = await ctx.db.query.cartItems({
+      where: {
+        user: { id: userId },
+        item: { id: args.id },
+      }
+    });
+    //Check if that item is already in their cart and increment by 1 if it is
+    if (exisitingCartItem) {
+      return ctx.db.mutation.updateCartItem({
+        where: { id: exisitingCartItem.id },
+        data: { quantity: exisitingCartItem.quantity + 1 },
+      }, info);
+    }
+    //If it's not, create a fresh cart item for that user
+    return ctx.db.mutation.createCartItem({
+      data: {
+        user: {
+          connect: { id: userId },
+        },
+        item: {
+          connect: { id: args.id },
+        },
       },
     }, info);
   },
