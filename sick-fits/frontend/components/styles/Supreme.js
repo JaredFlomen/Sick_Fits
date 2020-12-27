@@ -8,6 +8,7 @@ const Supreme = styled.h3`
   transform: skew(-3deg);
   margin: 0;
   font-size: 4rem;
+  font-family: 'radnika_next'
 `;
 
 export default Supreme;
