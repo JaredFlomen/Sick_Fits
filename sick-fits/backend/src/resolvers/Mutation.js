@@ -44,9 +44,14 @@ const Mutations = {
   async deleteItem(parent, args, ctx, info) {
     const where = { id: args.id };
     //Find the item
-    const item = await ctx.db.query.item({ where }, `{ id title }`);
+    const item = await ctx.db.query.item({ where }, `{ id title user { id }}`);
     //Check if they own the item or have the persmissions
-    //Todo
+    const ownsItem = item.user.id === ctx.request.userId;
+    //Checking if at least one permission is true
+    const hasPermissions = ctx.request.user.permissions.some(permission => ['ADMIN', 'ITEMDELETE'].includes(permission));
+    if (!ownsItem && !hasPermissions) {
+      throw new Error("You do not have permission to do that!")
+    }
     //Delete the item
     return ctx.db.mutation.deleteItem({ where }, info);
   },
@@ -166,61 +171,30 @@ const Mutations = {
     //Return the new user
     return updatedUser;
   },
-  // async updatePermissions(parent, args, ctx, info) {
-  //   //Check if they are logged in
-  //   if (!ctx.request.userId) {
-  //     throw new Error("You must be logged in!")
-  //   }
-  //   //Query the current user
-  //   const currentUser = await ctx.db.query.user({
-  //     where: {
-  //       id: ctx.request.userId,
-  //     },
-  //   }, info);
-  //   //Check if they have permissions to do this
-  //   hasPermission(currentUser, ['ADMIN', 'PERMISSIONUPDATE']);
-  //   //Update the permissions
-  //   return ctx.db.mutation.updateUser({
-  //     data: {
-  //       permissions: {
-  //         set: args.permissions,
-  //       },
-  //     },
-  //     where: {
-  //       id: args.userId,
-  //     },
-  //   }, info);
-  // },
   async updatePermissions(parent, args, ctx, info) {
-    // 1. Check if they are logged in
+    //Check if they are logged in
     if (!ctx.request.userId) {
-      throw new Error('You must be logged in!');
+      throw new Error("You must be logged in!")
     }
-    // 2. Query the current user
-    const currentUser = await ctx.db.query.user(
-      {
-        where: {
-          id: ctx.request.userId,
-        },
+    //Query the current user
+    const currentUser = await ctx.db.query.user({
+      where: {
+        id: ctx.request.userId,
       },
-      info
-    );
-    // 3. Check if they have permissions to do this
+    }, info);
+    //Check if they have permissions to do this
     hasPermission(currentUser, ['ADMIN', 'PERMISSIONUPDATE']);
-    // 4. Update the permissions
-    return ctx.db.mutation.updateUser(
-      {
-        data: {
-          permissions: {
-            set: args.permissions,
-          },
-        },
-        where: {
-          id: args.userId,
+    //Update the permissions
+    return ctx.db.mutation.updateUser({
+      data: {
+        permissions: {
+          set: args.permissions,
         },
       },
-      info
-    );
+      where: {
+        id: args.userId,
+      },
+    }, info);
   },
 };
 
