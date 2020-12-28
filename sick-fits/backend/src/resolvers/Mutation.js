@@ -286,7 +286,7 @@ const Mutations = {
         cart {
           id 
           quantity 
-          item { title price id description image }
+          item { title price id description image largeImage }
         }
       }`
     );
@@ -302,9 +302,31 @@ const Mutations = {
       source: args.token,
     });
     //Convert the cartItems to orderItems
+    const orderItems = user.cart.map((cartItem) => {
+      const orderItem = {
+        ...cartItem.item,
+        quantity: cartItem.quantity,
+        user: { connect: { id: userId } },
+      };
+      delete orderItem.id;
+      return orderItem;
+    });
     //Create the order
+    const order = await ctx.db.mutation.createOrder({
+      data: {
+        total: charge.amount,
+        charge: charge.id,
+        items: { create: orderItems },
+        user: { connect: { id: userId } },
+      },
+    });
     //Clear the cart and delete cartItems
+    const cartItemIds = user.cart.map((cartItem) => cartItem.id);
+    await ctx.db.mutation.deleteManyCartItems({
+      where: { id_in: cartItemIds },
+    });
     //Return the order to the client
+    return order;
   },
 };
 
