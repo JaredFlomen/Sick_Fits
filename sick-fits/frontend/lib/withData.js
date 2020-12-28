@@ -6,7 +6,7 @@ import { LOCAL_STATE_QUERY, TOGGLE_CART_MUTATION } from '../components/Cart';
 function createClient({ headers }) {
   return new ApolloClient({
     uri: process.env.NODE_ENV === 'development' ? endpoint : endpoint,
-    request: operation => {
+    request: (operation) => {
       operation.setContext({
         fetchOptions: {
           credentials: 'include',
@@ -25,7 +25,7 @@ function createClient({ headers }) {
             });
             //Write the cart state to the opposite
             const data = {
-              data: { cartOpen: !cartOpen }
+              data: { cartOpen: !cartOpen },
             };
             cache.writeData(data);
             return data;
@@ -33,7 +33,7 @@ function createClient({ headers }) {
         },
       },
       defaults: {
-        cartOpen: true,
+        cartOpen: false,
       },
     },
   });
