@@ -6,21 +6,28 @@ import RemoveFromCart from './RemoveFromCart';
 
 const CartItemSyles = styled.li`
   padding: 1rem 0;
-  border-bottom: 1px solid ${props => props.theme.lightgrey};
+  border-bottom: 1px solid ${(props) => props.theme.lightgrey};
   display: grid;
   align-items: center;
   grid-template-columns: auto 1fr auto;
   img {
     margin-right: 10px;
   }
-  h3, p {
+  h3,
+  p {
     margin: 0;
   }
 `;
 
 const CartItem = ({ cartItem }) => {
   //Check if that item exits
-  if (!cartItem.item) return <CartItemSyles><p>This item has been removed!</p><RemoveFromCart id={cartItem.id} /></CartItemSyles>
+  if (!cartItem.item)
+    return (
+      <CartItemSyles>
+        <p>This item has been removed!</p>
+        <RemoveFromCart id={cartItem.id} />
+      </CartItemSyles>
+    );
   return (
     <CartItemSyles>
       <img width="100" src={cartItem.item.image} alt={cartItem.item.title} />
@@ -31,16 +38,16 @@ const CartItem = ({ cartItem }) => {
           {' - '}
           <em>
             {cartItem.quantity} &times; {formatMoney(cartItem.item.price)} each
-        </em>
+          </em>
         </p>
       </div>
       <RemoveFromCart id={cartItem.id} />
     </CartItemSyles>
-  )
+  );
 };
 
 CartItem.propTypes = {
   cartItem: PropTypes.object.isRequired,
-}
+};
 
 export default CartItem;

@@ -16,14 +16,16 @@ const SIGNOUT_BUTTON = styled.button`
   font-family: 'radnika_next';
 `;
 
-const Signout = props => (
-  <Mutation 
+const Signout = (props) => (
+  <Mutation
     mutation={SIGN_OUT_MUTATION}
-    refetchQueries={[{
-      query: CURRENT_USER_QUERY
-    }]}
+    refetchQueries={[
+      {
+        query: CURRENT_USER_QUERY,
+      },
+    ]}
   >
-    {signout => <SIGNOUT_BUTTON onClick={signout}>Sign Out</SIGNOUT_BUTTON>}
+    {(signout) => <SIGNOUT_BUTTON onClick={signout}>Sign Out</SIGNOUT_BUTTON>}
   </Mutation>
 );
 export default Signout;

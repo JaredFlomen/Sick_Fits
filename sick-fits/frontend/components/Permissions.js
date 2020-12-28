@@ -6,7 +6,12 @@ import SickButton from './styles/SickButton';
 import PropTypes from 'prop-types';
 
 const possiblePermissions = [
-  'ADMIN', 'USER', 'ITEMCREATE', 'ITEMUPDATE', 'ITEMDELETE', 'PERMISSIONUPDATE'
+  'ADMIN',
+  'USER',
+  'ITEMCREATE',
+  'ITEMUPDATE',
+  'ITEMDELETE',
+  'PERMISSIONUPDATE',
 ];
 
 const ALL_USERS_QUERY = gql`
@@ -31,7 +36,7 @@ const UPDATE_PERMISSIONS_MUTATION = gql`
   }
 `;
 
-const Permissions = props => (
+const Permissions = (props) => (
   <Query query={ALL_USERS_QUERY}>
     {({ data, loading, error }) => (
       <div>
@@ -43,12 +48,16 @@ const Permissions = props => (
               <tr>
                 <th>Name</th>
                 <th>Email</th>
-                {possiblePermissions.map(permission => <th key={permission}>{permission}</th>)}
+                {possiblePermissions.map((permission) => (
+                  <th key={permission}>{permission}</th>
+                ))}
                 <th>⬇</th>
               </tr>
             </thead>
             <tbody>
-              {data.users.map(user => <UserPermissions user={user} key={user.id}/>)}
+              {data.users.map((user) => (
+                <UserPermissions user={user} key={user.id} />
+              ))}
             </tbody>
           </Table>
         </div>
@@ -56,7 +65,7 @@ const Permissions = props => (
       </div>
     )}
   </Query>
-)
+);
 
 class UserPermissions extends React.Component {
   static propTypes = {
@@ -70,7 +79,7 @@ class UserPermissions extends React.Component {
   state = {
     //Seeding of initial state
     permissions: this.props.user.permissions,
-  }
+  };
   handlePermissionChange = (e) => {
     const checkbox = e.target;
     //Take a copy of the current permissions
@@ -80,7 +89,9 @@ class UserPermissions extends React.Component {
       //Add it in
       updatedPermissions.push(checkbox.value);
     } else {
-      updatedPermissions = updatedPermissions.filter(permission => permission !== checkbox.value)
+      updatedPermissions = updatedPermissions.filter(
+        (permission) => permission !== checkbox.value
+      );
     }
     this.setState({ permissions: updatedPermissions });
   };
@@ -88,47 +99,53 @@ class UserPermissions extends React.Component {
   render() {
     const user = this.props.user;
     return (
-      <Mutation 
+      <Mutation
         mutation={UPDATE_PERMISSIONS_MUTATION}
         variables={{
           permissions: this.state.permissions,
-          userId: this.props.user.id
+          userId: this.props.user.id,
         }}
       >
         {(updatePermissions, { loading, error }) => (
-        <>
-          {error && <tr><td colSpan="8"><Error error={error} /></td></tr>}
-        <tr>
-          <td>{user.name}</td>
-          <td>{user.email}</td>
-          {possiblePermissions.map(permission => (
-            <td key={permission}>
-              <label htmlFor={`${user.id}-permission-${permission}`}>
-                <input
-                  //Using the id allows the entire box to be clickable
-                  id={`${user.id}-permission-${permission}`}
-                  type="checkbox"
-                  checked={this.state.permissions.includes(permission)}
-                  value={permission}
-                  onChange={this.handlePermissionChange}
-                />
-              </label>
-            </td>
-          ))}
-          <td>
-            <SickButton
-              type="button"
-              disabled={loading}
-              onClick={updatePermissions}
-            >
-              Updat{loading ? 'ing' : 'e'}
-            </SickButton>
-          </td>
-        </tr>
-        </>
+          <>
+            {error && (
+              <tr>
+                <td colSpan="8">
+                  <Error error={error} />
+                </td>
+              </tr>
+            )}
+            <tr>
+              <td>{user.name}</td>
+              <td>{user.email}</td>
+              {possiblePermissions.map((permission) => (
+                <td key={permission}>
+                  <label htmlFor={`${user.id}-permission-${permission}`}>
+                    <input
+                      //Using the id allows the entire box to be clickable
+                      id={`${user.id}-permission-${permission}`}
+                      type="checkbox"
+                      checked={this.state.permissions.includes(permission)}
+                      value={permission}
+                      onChange={this.handlePermissionChange}
+                    />
+                  </label>
+                </td>
+              ))}
+              <td>
+                <SickButton
+                  type="button"
+                  disabled={loading}
+                  onClick={updatePermissions}
+                >
+                  Updat{loading ? 'ing' : 'e'}
+                </SickButton>
+              </td>
+            </tr>
+          </>
         )}
       </Mutation>
-    )
+    );
   }
 }
 

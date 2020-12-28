@@ -9,6 +9,6 @@ const Meta = () => (
     <link rel="stylesheet" type="text/css" href="/static/nprogress.css" />
     <title>Sick Fits!</title>
   </Head>
-)
+);
 
 export default Meta;

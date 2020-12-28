@@ -15,46 +15,45 @@ const REQUEST_RESET_MUTATION = gql`
 class RequestReset extends Component {
   state = {
     email: '',
-  }
-  saveToState = e => {
+  };
+  saveToState = (e) => {
     this.setState({ [e.target.name]: e.target.value });
-  }
+  };
 
   render() {
     return (
-      <Mutation 
-        mutation={REQUEST_RESET_MUTATION} 
-        variables={this.state}
-      >
+      <Mutation mutation={REQUEST_RESET_MUTATION} variables={this.state}>
         {(reset, { error, loading, called }) => (
           <Form
             method="post"
-            onSubmit={async e => {
+            onSubmit={async (e) => {
               e.preventDefault();
               await reset();
-              this.setState({email: ''});
+              this.setState({ email: '' });
             }}
           >
             <fieldset disabled={loading} aria-busy={loading}>
               <h2>Request A Password Reset</h2>
               <Error error={error} />
-              {!error && !loading && called && <p>Success! Check Your Email For A Reset Link</p>}
-              <label htmlFor='email'>
+              {!error && !loading && called && (
+                <p>Success! Check Your Email For A Reset Link</p>
+              )}
+              <label htmlFor="email">
                 Email
-                <input 
+                <input
                   type="email"
                   name="email"
-                  placeholder="Email" 
-                  value={this.state.emai} 
+                  placeholder="Email"
+                  value={this.state.emai}
                   onChange={this.saveToState}
                 />
               </label>
-              <button type='submit'>Request Reset!</button>
+              <button type="submit">Request Reset!</button>
             </fieldset>
-          </Form>)
-        }
+          </Form>
+        )}
       </Mutation>
-    )
+    );
   }
 }
 

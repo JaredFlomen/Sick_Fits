@@ -14,40 +14,43 @@ const MY_CART_BUTTON = styled.button`
 const Nav = () => (
   <User>
     {({ data: { me } }) => (
-    <NavStyles>
-      <Link href="/items">
-        <a>Shop</a>
-      </Link>
-      {me && (
-        <>
-        <Link href="/sell">
-          <a>Sell</a>
+      <NavStyles>
+        <Link href="/items">
+          <a>Shop</a>
         </Link>
-        <Link href="/orders">
-          <a>Orders</a>
-        </Link>
-        <Link href="/me">
-          <a>Account</a>
-        </Link>
-          <Signout />
-          <Mutation mutation={TOGGLE_CART_MUTATION}>
-            {(toggleCart) => (
-              <MY_CART_BUTTON onClick={toggleCart}>
+        {me && (
+          <>
+            <Link href="/sell">
+              <a>Sell</a>
+            </Link>
+            <Link href="/orders">
+              <a>Orders</a>
+            </Link>
+            <Link href="/me">
+              <a>Account</a>
+            </Link>
+            <Signout />
+            <Mutation mutation={TOGGLE_CART_MUTATION}>
+              {(toggleCart) => (
+                <MY_CART_BUTTON onClick={toggleCart}>
                   My Cart
                   <CartCount
-                    count={me.cart.reduce((tally, cartItem) => tally + cartItem.quantity, 0)}
+                    count={me.cart.reduce(
+                      (tally, cartItem) => tally + cartItem.quantity,
+                      0
+                    )}
                   />
-              </MY_CART_BUTTON>
-            )}
-          </Mutation>
-        </>
-      )}
-      {!me && (
-        <Link href="/signup">
-          <a>Sign In</a>
-        </Link>
-      )}
-    </NavStyles>
+                </MY_CART_BUTTON>
+              )}
+            </Mutation>
+          </>
+        )}
+        {!me && (
+          <Link href="/signup">
+            <a>Sign In</a>
+          </Link>
+        )}
+      </NavStyles>
     )}
   </User>
 );

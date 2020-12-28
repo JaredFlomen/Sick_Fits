@@ -17,11 +17,11 @@ theme.lightGrey = theme.lightgrey;
 
 const StyledPage = styled.div`
   background: white;
-  color: ${props => props.theme.black};
+  color: ${(props) => props.theme.black};
 `;
 
 const Inner = styled.div`
-  max-width: ${props => props.theme.maxWidth};
+  max-width: ${(props) => props.theme.maxWidth};
   margin: 0 auto;
   padding: 2rem;
 `;
@@ -56,14 +56,12 @@ injectGlobal`
 class Page extends Component {
   render() {
     return (
-      <ThemeProvider theme={theme}> 
-      <StyledPage>
-        <Meta />
-        <Header />
-        <Inner>
-          {this.props.children}
-        </Inner>
-      </StyledPage>
+      <ThemeProvider theme={theme}>
+        <StyledPage>
+          <Meta />
+          <Header />
+          <Inner>{this.props.children}</Inner>
+        </StyledPage>
       </ThemeProvider>
     );
   }
