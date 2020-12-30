@@ -27,10 +27,15 @@ const Mutations = {
       },
       info
     );
-    console.log(item);
     return item;
   },
   updateItem(parent, args, ctx, info) {
+    //Checking if the user has proper permissions
+    const hasPermissions = ctx.request.user.permissions.some((permission) =>
+      ['ADMIN', 'ITEMUPDATE'].includes(permission)
+    );
+    if (!hasPermissions)
+      throw new Error("You don't have permission to do that");
     //Take a copy of the updates
     const updates = { ...args };
     //Remove the ID from the updates
@@ -56,7 +61,7 @@ const Mutations = {
     const hasPermissions = ctx.request.user.permissions.some((permission) =>
       ['ADMIN', 'ITEMDELETE'].includes(permission)
     );
-    if (!ownsItem && !hasPermissions) {
+    if (!ownsItem || !hasPermissions) {
       throw new Error('You do not have permission to do that!');
     }
     //Delete the item
@@ -85,7 +90,6 @@ const Mutations = {
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year cookie
     });
-    // Finalllllly we return the user to the browser
     return user;
   },
   async signin(parent, { email, password }, ctx, info) {
@@ -114,12 +118,12 @@ const Mutations = {
     return { message: 'Goodbye!' };
   },
   async requestReset(parent, args, ctx, info) {
-    // 1. Check if this is a real user
+    //Check if this is a real user
     const user = await ctx.db.query.user({ where: { email: args.email } });
     if (!user) {
       throw new Error(`No such user found for email ${args.email}`);
     }
-    // 2. Set a reset token and expiry on that user
+    //Set a reset token and expiry on that user
     const randomBytesPromiseified = promisify(randomBytes);
     const resetToken = (await randomBytesPromiseified(20)).toString('hex');
     const resetTokenExpiry = Date.now() + 3600000; // 1 hour from now
@@ -127,7 +131,7 @@ const Mutations = {
       where: { email: args.email },
       data: { resetToken, resetTokenExpiry },
     });
-    // 3. Email them that reset token
+    //Email them that reset token
     const mailRes = await transport.sendMail({
       from: 'jared@flomen.com',
       to: user.email,
@@ -137,7 +141,7 @@ const Mutations = {
       <a href="${process.env.FRONTEND_URL}/reset?resetToken=${resetToken}">Click Here to Reset</a>`),
     });
 
-    // 4. Return the message
+    //Return the message
     return { message: 'Thanks!' };
   },
   async resetPassword(parent, args, ctx, info) {
