@@ -1,5 +1,8 @@
 # Project: Sick-Fits by Jared Flomen 
 
+## The Tech Stack:
+![STACK](https://github.com/JaredFlomen/Sick_Fits/blob/master/sick-fits/docs/Stack2.png?raw=true)
+
 ## WalkThrough: 
 
 ### Signup, login and password
