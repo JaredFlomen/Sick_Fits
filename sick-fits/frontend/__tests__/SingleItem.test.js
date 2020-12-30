@@ -9,9 +9,9 @@ describe('<SingleItem/>', () => {
   it('renders with proper data', async () => {
     const mocks = [
       {
-        // when someone makes a request with this query and variable combo
+        //When someone makes a request with this query and variable info
         request: { query: SINGLE_ITEM_QUERY, variables: { id: '123' } },
-        // return this fake data (mocked data)
+        //Then -> return this fake data
         result: {
           data: {
             item: fakeItem(),
