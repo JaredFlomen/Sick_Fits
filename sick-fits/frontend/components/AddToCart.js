@@ -2,6 +2,7 @@ import React from 'react';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import { CURRENT_USER_QUERY } from './User';
+import Error from './ErrorMessage';
 
 const ADD_TO_CART_MUTATION = gql`
   mutation addToCart($id: ID!) {

@@ -30,6 +30,10 @@ const Mutations = {
     return item;
   },
   updateItem(parent, args, ctx, info) {
+    //Check if they are logged in
+    if (!ctx.request.userId) {
+      throw new Error('You must be logged in to do that!');
+    }
     //Checking if the user has proper permissions
     const hasPermissions = ctx.request.user.permissions.some((permission) =>
       ['ADMIN', 'ITEMUPDATE'].includes(permission)
@@ -52,6 +56,10 @@ const Mutations = {
     );
   },
   async deleteItem(parent, args, ctx, info) {
+    //Check if they are logged in
+    if (!ctx.request.userId) {
+      throw new Error('You must be logged in to do that!');
+    }
     const where = { id: args.id };
     //Find the item
     const item = await ctx.db.query.item({ where }, `{ id title user { id }}`);

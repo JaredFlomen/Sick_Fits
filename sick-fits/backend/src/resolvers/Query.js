@@ -10,6 +10,7 @@ const Query = {
     if (!ctx.request.userId) {
       return null;
     }
+    //Return user
     return ctx.db.query.user(
       {
         where: { id: ctx.request.userId },
