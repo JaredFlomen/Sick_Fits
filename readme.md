@@ -1,13 +1,14 @@
-# Project: Sick-Fits by Jared Flomen 
+# Project: Sick-Fits by Jared Flomen
+A full stack online clothing store complete with real credit checkout. Users can search, sell, add to cart and purchase their favourite items.
 
 ## Live Demo
 
 [Sick Fits deployed to Heroku](https://sickfits-next-prod-jf.herokuapp.com)
 
-## The Tech Stack:
+## The Tech Stack
 ![STACK](https://github.com/JaredFlomen/Sick_Fits/blob/master/sick-fits/docs/BestStack.png?raw=true)
 
-## WalkThrough: 
+## WalkThrough 
 
 ### Signup, login and password reset
 ![SIGNUP](https://github.com/JaredFlomen/Sick_Fits/blob/master/sick-fits/docs/Gate.png?raw=true)
