@@ -1,7 +1,11 @@
 # Project: Sick-Fits by Jared Flomen 
 
+## Live Demo
+
+[Sick Fits deployed to Heroku](https://sickfits-next-prod-jf.herokuapp.com)
+
 ## The Tech Stack:
-![STACK](https://github.com/JaredFlomen/Sick_Fits/blob/master/sick-fits/docs/Stack2.png?raw=true)
+![STACK](https://github.com/JaredFlomen/Sick_Fits/blob/master/sick-fits/docs/BestStack.png?raw=true)
 
 ## WalkThrough: 
 
