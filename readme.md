@@ -9,17 +9,17 @@
 
 ## WalkThrough: 
 
-### Signup, login and password
+### Signup, login and password reset
 ![SIGNUP](https://github.com/JaredFlomen/Sick_Fits/blob/master/sick-fits/docs/Gate.png?raw=true)
 
 ### A user can list item's for sale
 ![SELL ITEMS](https://github.com/JaredFlomen/Sick_Fits/blob/master/sick-fits/docs/Upload.png?raw=true)
 
-### Their cart
+### They can view their cart
 ![CART](https://github.com/JaredFlomen/Sick_Fits/blob/master/sick-fits/docs/Cart.png?raw=true)
 
 ### The user can purchase items
 ![PAY](https://github.com/JaredFlomen/Sick_Fits/blob/master/sick-fits/docs/Pay.png?raw=true)
 
-### The user can see their orders
+### The user can see their past orders
 ![ORDERS](https://github.com/JaredFlomen/Sick_Fits/blob/master/sick-fits/docs/Orders.png?raw=true)
