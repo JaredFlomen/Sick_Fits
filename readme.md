@@ -4,6 +4,7 @@ A full stack online clothing store complete with real credit checkout. Users can
 ## Live Demo
 
 [Sick Fits deployed to Heroku](https://sickfits-next-prod-jf.herokuapp.com)
+
 [Youtube Demo](https://www.youtube.com/watch?v=ezzLZU5fHbE&feature=emb_logo)
 
 ## The Tech Stack
